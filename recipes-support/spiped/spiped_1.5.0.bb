@@ -12,6 +12,8 @@ SRC_URI = "http://www.tarsnap.com/spiped/spiped-1.5.0.tgz"
 SRC_URI[sha256sum] = "b2f74b34fb62fd37d6e2bfc969a209c039b88847e853a49e91768dec625facd7"
 SRC_URI[md5sum] = "43cfcbc4009887faf92a27d7d2a6351d"
 
+DEPLOYDIR = "/usr/bin"
+
 # NOTE: some of these dependencies may be optional, check the Makefile and/or upstream documentation
 DEPENDS = "openssl"
 
@@ -29,8 +31,14 @@ do_compile () {
 	oe_runmake
 }
 
-do_install () {
-	# This is a guess; additional arguments may be required
-	oe_runmake BINDIR=${D}/usr/bin/ install
+#do_install () {
+#	# This is a guess; additional arguments may be required
+#	oe_runmake BINDIR=${D}/usr/bin/ install
+#}
+
+do_install() {
+    install -d ${D}${DEPLOYDIR}/
+    install -m 0755 ${B}/spiped/spiped ${D}${DEPLOYDIR}/
 }
+
 
